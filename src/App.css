@@ -126,28 +126,28 @@ input[type=range] {
 }
 
 input[type=range]::-webkit-slider-runnable-track {
-    height: 5px;
-    background-color: rgba(210, 210, 210, 1);;
-    border: none;
+  height: 5px;
+  background-color: rgba(210, 210, 210, 1);
+  border: none;
   margin: 2px;
-    border-radius: 3px;
+  border-radius: 3px;
 }
 
 input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    border: none;
-    height: 35px;
-    width: 10px;
-    border-radius: 10%;
-    background: rgb(200, 200, 250);
-    margin-top: -15px;
+  -webkit-appearance: none;
+  border: none;
+  height: 35px;
+  width: 10px;
+  border-radius: 10%;
+  background: rgb(200, 200, 250);
+  margin-top: -15px;
 }
 
 #volumeoutput{
   text-align: center;
   font-weight: bold;
   font-size: 20px;
-  margin: 5px
+  margin: 5px;
 }
 
 .drum-pad {
@@ -200,7 +200,7 @@ input[type=range]::-webkit-slider-thumb {
     margin-top: 20px;
   }
 
-  #display, #volumeBarWrap {
+  #display #volumeBarWrap {
     width: 100%;
     max-width: none;
   }
