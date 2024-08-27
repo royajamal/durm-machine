@@ -78,7 +78,6 @@ body {
 }
 
 #display {
-  display: border-box;
   width: 150px;
   min-width: 150px;
   max-width: 150px;
@@ -143,7 +142,7 @@ input[type=range]::-webkit-slider-thumb {
   margin-top: -15px;
 }
 
-#volumeoutput{
+#volumeoutput {
   text-align: center;
   font-weight: bold;
   font-size: 20px;
