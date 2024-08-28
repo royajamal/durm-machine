@@ -30,7 +30,7 @@ const App = () => {
     <>
       <div id="drum-machine">
         <div id="rightWraper">
-         <ToggleButton />
+          <ToggleButton />
           <div id="display"></div>
           <div id="volumeBarWrap">
             <VolumeBar value={volume} onVolumeChange={setVolume} />
@@ -127,25 +127,25 @@ const ToggleButton = () => {
   const toggle = () => {
     if (toggleOn){
       toggleOn = false;
-      document.querySelector("#checkBall").style.gridArea = "c";
-      document.querySelector("#checkText").style.gridArea = "a";
-      document.querySelector("#checkBall").style.marginLeft = "20px";
-      document.querySelector("#checkText").style.marginLeft = "20px";
-      document.querySelector("#checkText").textContent = "OFF"
-      document.querySelector("#checkText").style.color = "rgb(180, 180, 180)"
-      document.querySelector("#volumebar").addClass("disableClass");
-      document.querySelector(".drum-pad").addClass("disableClass");
+      document.querySelector('#checkBall').style.gridArea = 'c';
+      document.querySelector('#checkText').style.gridArea = 'a';
+      document.querySelector('#checkBall').style.marginLeft = '20px';
+      document.querySelector('#checkText').style.marginLeft = '20px';
+      document.querySelector('#checkText').textContent = 'OFF';
+      document.querySelector('#checkText').style.color = 'rgb(180, 180, 180)'
+      document.querySelector('#volumebar').addClass('disableClass');
+      document.querySelector('.drum-pad').addClass('disableClass');
     }
     else if (!toggleOn){
       toggleOn = true;
-      document.querySelector("#checkBall").style.gridArea = "a";
-      document.querySelector("#checkText").style.gridArea = "c";
-      document.querySelector("#checkBall").style.marginLeft = "5px";
-      document.querySelector("#checkText").style.marginLeft = "5px";
-      document.querySelector("#checkText").textContent = "ON"
-      document.querySelector("#checkText").style.color = "rgb(200, 250, 250)"
-      document.querySelector("#volumebar").removeClass("disableClass");
-      document.querySelector(".drum-pad").removeClass("disableClass");
+      document.querySelector('#checkBall').style.gridArea = 'a';
+      document.querySelector('#checkText').style.gridArea = 'c';
+      document.querySelector('#checkBall').style.marginLeft = '5px';
+      document.querySelector('#checkText').style.marginLeft = '5px';
+      document.querySelector('#checkText').textContent = 'ON'
+      document.querySelector('#checkText').style.color = 'rgb(200, 250, 250)'
+      document.querySelector('#volumebar').removeClass('disableClass');
+      document.querySelector('.drum-pad').removeClass('disableClass');
     }
   }
   return (
@@ -155,7 +155,7 @@ const ToggleButton = () => {
       <div id="checkText">ON</div>
     </div>  
   </>
-  )
-}
+  );
+};
 //------------------------------------------------
 export default App;
