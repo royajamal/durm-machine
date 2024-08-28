@@ -1,39 +1,39 @@
 import React, { useState, useEffect, useCallback } from 'react'; 
 import './App.css';
 
-const Heater1 = "https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3";
-const Heater2 = "https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3";
-const Heater3 = "https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3";
-const Heater4 = "https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3";
-const Clap = "https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3";
-const OpenHH = "https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3";
-const KicknHat = "https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3";
-const Kick = "https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3";
-const ClosedHH = "https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3";
+const Heater1 = 'https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3';
+const Heater2 = 'https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3';
+const Heater3 = 'https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3';
+const Heater4 = 'https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3';
+const Clap = 'https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3';
+const OpenHH = 'https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3';
+const KicknHat = 'https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3';
+const Kick = 'https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3';
+const ClosedHH = 'https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3';
 const BtnNames = {
-  Q: "Heater 1",
-  W: "Heater 2",
-  E: "Heater3",
-  A: "Heater 4",
-  S: "Clap",
-  D: "Open HH",
-  Z: "Kick n Hat",
-  X: "Kick",
-  C: "Closed HH"
+  Q: 'Heater 1',
+  W: 'Heater 2',
+  E: 'Heater3',
+  A: 'Heater 4',
+  S: 'Clap',
+  D: 'Open HH',
+  Z: 'Kick n Hat',
+  X: 'Kick',
+  C: 'Closed HH',
 };
 let toggleOn = true;
 
 //------------------------------------------------
 const App = () => {
   const [volume, setVolume] = useState(1);
-  return(
+  return (
     <>
       <div id="drum-machine">
         <div id="rightWraper">
-            <ToggleButton />
+         <ToggleButton />
           <div id="display"></div>
           <div id="volumeBarWrap">
-            <VolumeBar value={volume} onVolumeChange={setVolume}/>
+            <VolumeBar value={volume} onVolumeChange={setVolume} />
           </div>
         </div>
         <div id="leftWraper">
@@ -41,18 +41,16 @@ const App = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 //------------------------------------------------
 const Pad = ({ volume }) => {
   const playSound = (audio, letter) => {
-    const audioId = document.querySelector("#" + letter);
-    document.querySelector("#display").textContent = BtnNames[letter];
-    
+    const audioId = document.querySelector('#' + letter);
+    document.querySelector('#display').textContent = BtnNames[letter];
     // Make sure any previous playback is stopped before playing the new sound
     audioId.pause();
     audioId.currentTime = 0;
-    
     audioId.volume = volume;
     audioId.play().catch(error => {
       console.error("Playback error:", error);
