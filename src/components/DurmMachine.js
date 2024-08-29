@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'; 
 import '../App.css';
 
-import React, { useState, useEffect, useCallback } from 'react';
-import './App.css';
-
 const Heater1 = 'https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3';
 const Heater2 = 'https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3';
 const Heater3 = 'https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3';
