@@ -31,7 +31,7 @@ const App = () => {
       <div id="drum-machine">
         <div id="rightWraper">
           <ToggleButton />
-          <div id="display"></div>
+          <div id="display"/>
           <div id="volumeBarWrap">
             <VolumeBar value={volume} onVolumeChange={setVolume} />
           </div>
@@ -44,10 +44,14 @@ const App = () => {
   );
 };
 //------------------------------------------------
-const Pad = ({ volume }) => {
-  const playSound = (audio, letter) => {
-    const audioId = document.querySelector(`#${letter}`);
-    document.querySelector('#display').textContent = BtnNames[letter];
+Pad.propTypes = {
+  volume: PropTypes.number.isRequired,
+};
+
+VolumeBar.propTypes = {
+  value: PropTypes.number.isRequired,
+  onVolumeChange: PropTypes.func.isRequired,
+};
     // Make sure any previous playback is stopped before playing the new sound
     audioId.pause();
     audioId.currentTime = 0;
@@ -55,7 +59,7 @@ const Pad = ({ volume }) => {
     audioId.play().catch((error) => {
       console.error('Playback error:', error);
     });
-  };
+  
 
   const handleKeyPress = (event) => {
     if (toggleOn) {
@@ -77,46 +81,46 @@ const Pad = ({ volume }) => {
   return (
     <>
       <div id="buttonWraper">
-        <button className="drum-pad btn" id="Heater1" onClick={() => playSound(Heater1, 'Q')}>
+        <button type='button' className="drum-pad btn" id="Heater1" onClick={() => playSound(Heater1, 'Q')}>
           Q
-          <audio className="clip" id="Q" src={Heater1} type="audio/mpeg"></audio>
+          <audio className="clip" id="Q" src={Heater1} type="audio/mpeg"><track kind='captions'/> </audio>
         </button>
-        <button className="drum-pad btn" id="Heater2" onClick={() => playSound(Heater2, 'W')}>
+        <button type='button' className="drum-pad btn" id="Heater2" onClick={() => playSound(Heater2, 'W')}>
           W
-          <audio className="clip" id="W" src={Heater2} type="audio/mpeg"></audio>
+          <audio type='button' className="clip" id="W" src={Heater2} type="audio/mpeg"></audio>
         </button>
-        <button className="drum-pad btn" id="Heater3" onClick={() => playSound(Heater3, 'E')}>
+        <button type='button' className="drum-pad btn" id="Heater3" onClick={() => playSound(Heater3, 'E')}>
           E
-          <audio className="clip" id="E" src={Heater3} type="audio/mpeg"></audio>
+          <audio className="clip" id="E" src={Heater3} type="audio/mpeg"><track kind='captions'/> </audio>
         </button>
-        <button className="drum-pad btn" id="Heater4" onClick={() => playSound(Heater4, 'A')}>
+        <button  type='button' className="drum-pad btn" id="Heater4" onClick={() => playSound(Heater4, 'A')}>
           A
-          <audio className="clip" id="A" src={Heater4} type="audio/mpeg"></audio>
+          <audio className="clip" id="A" src={Heater4} type="audio/mpeg"><track kind='captions'/> </audio>
         </button>
-        <button className="drum-pad btn" id="Clap" onClick={() => playSound(Clap, 'S')}>
+        <button type='button' className="drum-pad btn" id="Clap" onClick={() => playSound(Clap, 'S')}>
           S
-          <audio className="clip" id="S" src={Clap} type="audio/mpeg"></audio>
+          <audio className="clip" id="S" src={Clap} type="audio/mpeg"><track kind='captions'/> </audio>
         </button>
-        <button className="drum-pad btn" id="OpenHH" onClick={() => playSound(OpenHH, 'D')}>
+        <button type='button' className="drum-pad btn" id="OpenHH" onClick={() => playSound(OpenHH, 'D')}>
           D
-          <audio className="clip" id="D" src={OpenHH} type="audio/mpeg"></audio>
+          <audio className="clip" id="D" src={OpenHH} type="audio/mpeg"><track kind='captions'/> </audio>
         </button>
-        <button className="drum-pad btn" id="KicknHat" onClick={() => playSound(KicknHat, 'Z')}>
+        <button type='button' className="drum-pad btn" id="KicknHat" onClick={() => playSound(KicknHat, 'Z')}>
           Z
-          <audio className="clip" id="Z" src={KicknHat} type="audio/mpeg"></audio>
+          <audio className="clip" id="Z" src={KicknHat} type="audio/mpeg"><track kind='captions'/> </audio>
         </button>
-        <button className="drum-pad btn" id="Kick" onClick={() => playSound(Kick, 'X')}>
+        <button type='button' className="drum-pad btn" id="Kick" onClick={() => playSound(Kick, 'X')}>
           X
-          <audio className="clip" id="X" src={Kick} type="audio/mpeg"></audio>
+          <audio className="clip" id="X" src={Kick} type="audio/mpeg"><track kind='captions'/> </audio>
         </button>
-        <button className="drum-pad btn" id="ClosedHH" onClick={() => playSound(ClosedHH, 'C')}>
+        <button type='button' className="drum-pad btn" id="ClosedHH" onClick={() => playSound(ClosedHH, 'C')}>
           C
-          <audio className="clip" id="C" src={ClosedHH} type="audio/mpeg"></audio>
+          <audio className="clip" id="C" src={ClosedHH} type="audio/mpeg">  <track kind='captions'/>  </audio>
         </button>
       </div>
     </>
   );
-};
+
 //------------------------------------------------
 const VolumeBar = ({ value, onVolumeChange }) => {
   const handleVolume = useCallback(
@@ -160,7 +164,12 @@ const ToggleButton = () => {
   };
 
   return (
-    <div className="powerBtn" onClick={toggle}>
+    <div className="powerBtn"
+    role="button" 
+    tabIndex={0} 
+     onClick={toggle}
+     onKeyPress={toggle}
+     >
       <span id="checkBall"></span>
       <div id="checkText">ON</div>
     </div>
