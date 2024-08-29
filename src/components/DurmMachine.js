@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react'; 
-import PropTypes from 'prop-types'; // Import PropTypes to avoid errors
 import '../App.css';
 
 const Heater1 = 'https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3';
