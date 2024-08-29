@@ -28,15 +28,15 @@ const App = () => {
   const [volume, setVolume] = useState(1);
   return (
     <>
-      <div id="drum-machine">
-        <div id="rightWraper">
+      <div id='drum-machine'>
+        <div id='rightWraper'>
           <ToggleButton />
-          <div id="display"></div>
-          <div id="volumeBarWrap">
+          <div id='display'></div>
+          <div id='volumeBarWrap'>
             <VolumeBar value={volume} onVolumeChange={setVolume} />
           </div>
         </div>
-        <div id="leftWraper">
+        <div id='leftWraper'>
           <Pad volume={volume} />
         </div>
       </div>
@@ -53,7 +53,7 @@ const Pad = ({ volume }) => {
     audioId.currentTime = 0;
     audioId.volume = volume;
     audioId.play().catch(error => {
-      console.error("Playback error:", error);
+      console.error('Playback error:', error);
     });
   };
 
@@ -68,41 +68,41 @@ const Pad = ({ volume }) => {
   };
 
   useEffect(() => {
-    window.addEventListener("keydown", handleKeyPress);
+    window.addEventListener('keydown', handleKeyPress);
     return () => {
-      window.removeEventListener("keydown", handleKeyPress);
+      window.removeEventListener('keydown', handleKeyPress);
     };
   }, []);
 
   return (
     <>
-      <div id="buttonWraper">
-        <button className="drum-pad btn" id="Heater1" onClick={() => { playSound(Heater1, "Q") }}>Q
-          <audio className="clip" id="Q" src={Heater1} type="audio/mpeg"></audio>
+      <div id='buttonWraper'>
+        <button className='drum-pad btn' id='Heater1' onClick={() => { playSound(Heater1, 'Q') }}>Q
+          <audio className='clip' id='Q' src={Heater1} type='audio/mpeg'></audio>
         </button>
-        <button className="drum-pad btn" id="Heater2" onClick={() => { playSound(Heater2, "W") }}>W
-          <audio className="clip" id="W" src={Heater2} type="audio/mpeg"></audio>
+        <button className='drum-pad btn' id='Heater2' onClick={() => { playSound(Heater2, 'W') }}>W
+          <audio className='clip' id='W' src={Heater2} type='audio/mpeg'></audio>
         </button>
-        <button className="drum-pad btn" id="Heater3" onClick={() => { playSound(Heater3, "E") }}>E
-          <audio className="clip" id="E" src={Heater3} type="audio/mpeg"></audio>
+        <button className='drum-pad btn' id='Heater3' onClick={() => { playSound(Heater3, 'E') }}>E
+          <audio className='clip' id='E' src={Heater3} type='audio/mpeg'></audio>
         </button>
-        <button className="drum-pad btn" id="Heater4" onClick={() => { playSound(Heater4, "A") }}>A
-          <audio className="clip" id="A" src={Heater4} type="audio/mpeg"></audio>
+        <button className='drum-pad btn' id='Heater4' onClick={() => { playSound(Heater4, 'A') }}>A
+          <audio className='clip' id='A' src={Heater4} type='audio/mpeg'></audio>
         </button>
-        <button className="drum-pad btn" id="Clap" onClick={() => { playSound(Clap, "S") }}>S
-          <audio className="clip" id="S" src={Clap} type="audio/mpeg"></audio>
+        <button className='drum-pad btn' id='Clap' onClick={() => { playSound(Clap, 'S') }}>S
+          <audio className='clip' id='S' src={Clap} type='audio/mpeg'></audio>
         </button>
-        <button className="drum-pad btn" id="OpenHH" onClick={() => { playSound(OpenHH, "D") }}>D
-          <audio className="clip" id="D" src={OpenHH} type="audio/mpeg"></audio>
+        <button className='drum-pad btn' id='OpenHH' onClick={() => { playSound(OpenHH, 'D') }}>D
+          <audio className='clip' id='D' src={OpenHH} type='audio/mpeg'></audio>
         </button>
-        <button className="drum-pad btn" id="KicknHat" onClick={() => { playSound(KicknHat, "Z") }}>Z
-          <audio className="clip" id="Z" src={KicknHat} type="audio/mpeg"></audio>
+        <button className='drum-pad btn' id='KicknHat' onClick={() => { playSound(KicknHat, 'Z') }}>Z
+          <audio className='clip' id='Z' src={KicknHat} type='audio/mpeg'></audio>
         </button>
-        <button className="drum-pad btn" id="Kick" onClick={() => { playSound(Kick, "X") }}>X
-          <audio className="clip" id="X" src={Kick} type="audio/mpeg"></audio>
+        <button className='drum-pad btn' id='Kick' onClick={() => { playSound(Kick, 'X') }}>X
+          <audio className='clip' id='X' src={Kick} type='audio/mpeg'></audio>
         </button>
-        <button className="drum-pad btn" id="ClosedHH" onClick={() => { playSound(ClosedHH, "C") }}>C
-          <audio className="clip" id="C" src={ClosedHH} type="audio/mpeg"></audio>
+        <button className='drum-pad btn' id='ClosedHH' onClick={() => { playSound(ClosedHH, 'C') }}>C
+          <audio className='clip' id='C' src={ClosedHH} type='audio/mpeg'></audio>
         </button>
       </div>
     </>
@@ -112,13 +112,13 @@ const Pad = ({ volume }) => {
 const VolumeBar = ({value, onVolumeChange}) => {
   const handlevolume = useCallback(e => {
     onVolumeChange(e.target.value);
-    document.getElementById("volumeoutput").value = Math.round(e.target.value * 100);
+    document.getElementById('volumeoutput').value = Math.round(e.target.value * 100);
   }, [onVolumeChange])
   
   return (
     <>
-      <input id="volumebar" type="range" name="volume" min="0" max="1" step="0.01" onChange={handlevolume} />
-      <output id="volumeoutput" for="volume">100</output>
+      <input id='volumebar' type='range' name='volume' min='0' max='1' step='0.01' onChange={handlevolume} />
+      <output id='volumeoutput' for='volume'>100</output>
     </>
   )
 }
@@ -150,9 +150,9 @@ const ToggleButton = () => {
   }
   return (
   <>
-    <div className="powerBtn" onClick={toggle}>
-      <span id="checkBall"></span>
-      <div id="checkText">ON</div>
+    <div className='powerBtn' onClick={toggle}>
+      <span id='checkBall'></span>
+      <div id='checkText'>ON</div>
     </div>  
   </>
   );
