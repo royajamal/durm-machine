@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'; 
+import PropTypes from 'prop-types'; // Import PropTypes to avoid errors
 import '../App.css';
 
 const Heater1 = 'https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3';
@@ -10,6 +11,7 @@ const OpenHH = 'https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3';
 const KicknHat = 'https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3';
 const Kick = 'https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3';
 const ClosedHH = 'https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3';
+
 const BtnNames = {
   Q: 'Heater 1',
   W: 'Heater 2',
@@ -21,45 +23,43 @@ const BtnNames = {
   X: 'Kick',
   C: 'Closed HH',
 };
+
 let toggleOn = true;
 
 //------------------------------------------------
 const App = () => {
   const [volume, setVolume] = useState(1);
+
   return (
-    <>
-      <div id="drum-machine">
-        <div id="rightWraper">
-          <ToggleButton />
-          <div id="display"/>
-          <div id="volumeBarWrap">
-            <VolumeBar value={volume} onVolumeChange={setVolume} />
-          </div>
-        </div>
-        <div id="leftWraper">
-          <Pad volume={volume} />
+    <div id="drum-machine">
+      <div id="rightWraper">
+        <ToggleButton />
+        <div id="display"/>
+        <div id="volumeBarWrap">
+          <VolumeBar value={volume} onVolumeChange={setVolume} />
         </div>
       </div>
-    </>
+      <div id="leftWraper">
+        <Pad volume={volume} />
+      </div>
+    </div>
   );
 };
-//------------------------------------------------
-Pad.propTypes = {
-  volume: PropTypes.number.isRequired,
-};
 
-VolumeBar.propTypes = {
-  value: PropTypes.number.isRequired,
-  onVolumeChange: PropTypes.func.isRequired,
-};
+//------------------------------------------------
+const Pad = ({ volume }) => {
+
+  const playSound = (audioUrl, audioId) => {
+    const audioElement = document.getElementById(audioId);
+    
     // Make sure any previous playback is stopped before playing the new sound
-    audioId.pause();
-    audioId.currentTime = 0;
-    audioId.volume = volume;
-    audioId.play().catch((error) => {
+    audioElement.pause();
+    audioElement.currentTime = 0;
+    audioElement.volume = volume;
+    audioElement.play().catch((error) => {
       console.error('Playback error:', error);
     });
-  
+  };
 
   const handleKeyPress = (event) => {
     if (toggleOn) {
@@ -79,47 +79,28 @@ VolumeBar.propTypes = {
   }, []);
 
   return (
-    <>
-      <div id="buttonWraper">
-        <button type='button' className="drum-pad btn" id="Heater1" onClick={() => playSound(Heater1, 'Q')}>
-          Q
-          <audio className="clip" id="Q" src={Heater1} type="audio/mpeg"><track kind='captions'/> </audio>
+    <div id="buttonWraper">
+      {Object.keys(BtnNames).map((key) => (
+        <button
+          key={key}
+          type='button'
+          className="drum-pad btn"
+          id={BtnNames[key].replace(' ', '')}
+          onClick={() => playSound(eval(key), key)}
+        >
+          {key}
+          <audio className="clip" id={key} src={eval(key)} type="audio/mpeg">
+            <track kind='captions'/>
+          </audio>
         </button>
-        <button type='button' className="drum-pad btn" id="Heater2" onClick={() => playSound(Heater2, 'W')}>
-          W
-          <audio type='button' className="clip" id="W" src={Heater2} type="audio/mpeg"></audio>
-        </button>
-        <button type='button' className="drum-pad btn" id="Heater3" onClick={() => playSound(Heater3, 'E')}>
-          E
-          <audio className="clip" id="E" src={Heater3} type="audio/mpeg"><track kind='captions'/> </audio>
-        </button>
-        <button  type='button' className="drum-pad btn" id="Heater4" onClick={() => playSound(Heater4, 'A')}>
-          A
-          <audio className="clip" id="A" src={Heater4} type="audio/mpeg"><track kind='captions'/> </audio>
-        </button>
-        <button type='button' className="drum-pad btn" id="Clap" onClick={() => playSound(Clap, 'S')}>
-          S
-          <audio className="clip" id="S" src={Clap} type="audio/mpeg"><track kind='captions'/> </audio>
-        </button>
-        <button type='button' className="drum-pad btn" id="OpenHH" onClick={() => playSound(OpenHH, 'D')}>
-          D
-          <audio className="clip" id="D" src={OpenHH} type="audio/mpeg"><track kind='captions'/> </audio>
-        </button>
-        <button type='button' className="drum-pad btn" id="KicknHat" onClick={() => playSound(KicknHat, 'Z')}>
-          Z
-          <audio className="clip" id="Z" src={KicknHat} type="audio/mpeg"><track kind='captions'/> </audio>
-        </button>
-        <button type='button' className="drum-pad btn" id="Kick" onClick={() => playSound(Kick, 'X')}>
-          X
-          <audio className="clip" id="X" src={Kick} type="audio/mpeg"><track kind='captions'/> </audio>
-        </button>
-        <button type='button' className="drum-pad btn" id="ClosedHH" onClick={() => playSound(ClosedHH, 'C')}>
-          C
-          <audio className="clip" id="C" src={ClosedHH} type="audio/mpeg">  <track kind='captions'/>  </audio>
-        </button>
-      </div>
-    </>
+      ))}
+    </div>
   );
+};
+
+Pad.propTypes = {
+  volume: PropTypes.number.isRequired,
+};
 
 //------------------------------------------------
 const VolumeBar = ({ value, onVolumeChange }) => {
@@ -133,11 +114,17 @@ const VolumeBar = ({ value, onVolumeChange }) => {
 
   return (
     <>
-      <input id="volumebar" type="range" name="volume" min="0" max="1" step="0.01" onChange={handleVolume} />
-      <output id="volumeoutput" htmlFor="volume">100</output>
+      <input id="volumebar" type="range" name="volume" min="0" max="1" step="0.01" onChange={handleVolume} value={value}/>
+      <output id="volumeoutput" htmlFor="volume">{Math.round(value * 100)}</output>
     </>
   );
 };
+
+VolumeBar.propTypes = {
+  value: PropTypes.number.isRequired,
+  onVolumeChange: PropTypes.func.isRequired,
+};
+
 //------------------------------------------------
 const ToggleButton = () => {
   const toggle = () => {
@@ -175,5 +162,6 @@ const ToggleButton = () => {
     </div>
   );
 };
+
 //------------------------------------------------
 export default App;
