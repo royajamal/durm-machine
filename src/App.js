@@ -1,15 +1,19 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import './App.css';
+import PropTypes from 'prop-types';
+import '../App.css';
 
-const Heater1 = 'https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3';
-const Heater2 = 'https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3';
-const Heater3 = 'https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3';
-const Heater4 = 'https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3';
-const Clap = 'https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3';
-const OpenHH = 'https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3';
-const KicknHat = 'https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3';
-const Kick = 'https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3';
-const ClosedHH = 'https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3';
+const soundUrls = {
+  Q: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3',
+  W: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-2.mp3',
+  E: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-3.mp3',
+  A: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-4_1.mp3',
+  S: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-6.mp3',
+  D: 'https://s3.amazonaws.com/freecodecamp/drums/Dsc_Oh.mp3',
+  Z: 'https://s3.amazonaws.com/freecodecamp/drums/Kick_n_Hat.mp3',
+  X: 'https://s3.amazonaws.com/freecodecamp/drums/RP4_KICK_1.mp3',
+  C: 'https://s3.amazonaws.com/freecodecamp/drums/Cev_H2.mp3',
+};
+
 const BtnNames = {
   Q: 'Heater 1',
   W: 'Heater 2',
@@ -21,39 +25,38 @@ const BtnNames = {
   X: 'Kick',
   C: 'Closed HH',
 };
+
 let toggleOn = true;
 
 //------------------------------------------------
 const App = () => {
   const [volume, setVolume] = useState(1);
+
   return (
-    <>
-      <div id="drum-machine">
-        <div id="rightWraper">
-          <ToggleButton />
-          <div id="display"></div>
-          <div id="volumeBarWrap">
-            <VolumeBar value={volume} onVolumeChange={setVolume} />
-          </div>
-        </div>
-        <div id="leftWraper">
-          <Pad volume={volume} />
+    <div id="drum-machine">
+      <div id="rightWraper">
+        <ToggleButton />
+        <div id="display" />
+        <div id="volumeBarWrap">
+          <VolumeBar value={volume} onVolumeChange={setVolume} />
         </div>
       </div>
-    </>
+      <div id="leftWraper">
+        <Pad volume={volume} />
+      </div>
+    </div>
   );
 };
+
 //------------------------------------------------
 const Pad = ({ volume }) => {
-  const playSound = (audio, letter) => {
-    const audioId = document.querySelector(`#${letter}`);
-    document.querySelector('#display').textContent = BtnNames[letter];
-    // Make sure any previous playback is stopped before playing the new sound
-    audioId.pause();
-    audioId.currentTime = 0;
-    audioId.volume = volume;
-    audioId.play().catch((error) => {
-      console.error('Playback error:', error);
+  const playSound = (audioUrl, audioId) => {
+    const audioElement = document.getElementById(audioId);
+    audioElement.pause();
+    audioElement.currentTime = 0;
+    audioElement.volume = volume;
+    audioElement.play().catch((error) => {
+      error('Playback error:', error);
     });
   };
 
@@ -75,48 +78,29 @@ const Pad = ({ volume }) => {
   }, []);
 
   return (
-    <>
-      <div id="buttonWraper">
-        <button className="drum-pad btn" id="Heater1" onClick={() => playSound(Heater1, 'Q')}>
-          Q
-          <audio className="clip" id="Q" src={Heater1} type="audio/mpeg"></audio>
+    <div id="buttonWraper">
+      {Object.keys(BtnNames).map((key) => (
+        <button
+          key={key}
+          type="button"
+          className="drum-pad btn"
+          id={BtnNames[key].replace(' ', '')}
+          onClick={() => playSound(soundUrls[key], key)}
+        >
+          {key}
+          <audio className="clip" id={key} src={soundUrls[key]} type="audio/mpeg">
+            <track kind="captions" />
+          </audio>
         </button>
-        <button className="drum-pad btn" id="Heater2" onClick={() => playSound(Heater2, 'W')}>
-          W
-          <audio className="clip" id="W" src={Heater2} type="audio/mpeg"></audio>
-        </button>
-        <button className="drum-pad btn" id="Heater3" onClick={() => playSound(Heater3, 'E')}>
-          E
-          <audio className="clip" id="E" src={Heater3} type="audio/mpeg"></audio>
-        </button>
-        <button className="drum-pad btn" id="Heater4" onClick={() => playSound(Heater4, 'A')}>
-          A
-          <audio className="clip" id="A" src={Heater4} type="audio/mpeg"></audio>
-        </button>
-        <button className="drum-pad btn" id="Clap" onClick={() => playSound(Clap, 'S')}>
-          S
-          <audio className="clip" id="S" src={Clap} type="audio/mpeg"></audio>
-        </button>
-        <button className="drum-pad btn" id="OpenHH" onClick={() => playSound(OpenHH, 'D')}>
-          D
-          <audio className="clip" id="D" src={OpenHH} type="audio/mpeg"></audio>
-        </button>
-        <button className="drum-pad btn" id="KicknHat" onClick={() => playSound(KicknHat, 'Z')}>
-          Z
-          <audio className="clip" id="Z" src={KicknHat} type="audio/mpeg"></audio>
-        </button>
-        <button className="drum-pad btn" id="Kick" onClick={() => playSound(Kick, 'X')}>
-          X
-          <audio className="clip" id="X" src={Kick} type="audio/mpeg"></audio>
-        </button>
-        <button className="drum-pad btn" id="ClosedHH" onClick={() => playSound(ClosedHH, 'C')}>
-          C
-          <audio className="clip" id="C" src={ClosedHH} type="audio/mpeg"></audio>
-        </button>
-      </div>
-    </>
+      ))}
+    </div>
   );
 };
+
+Pad.propTypes = {
+  volume: PropTypes.number.isRequired,
+};
+
 //------------------------------------------------
 const VolumeBar = ({ value, onVolumeChange }) => {
   const handleVolume = useCallback(
@@ -124,47 +108,61 @@ const VolumeBar = ({ value, onVolumeChange }) => {
       onVolumeChange(e.target.value);
       document.getElementById('volumeoutput').value = Math.round(e.target.value * 100);
     },
-    [onVolumeChange]
+    [onVolumeChange],
   );
 
   return (
     <>
-      <input id="volumebar" type="range" name="volume" min="0" max="1" step="0.01" onChange={handleVolume} />
-      <output id="volumeoutput" htmlFor="volume">100</output>
+      <input id="volumebar" type="range" name="volume" min="0" max="1" step="0.01" onChange={handleVolume} value={value} />
+      <output id="volumeoutput" htmlFor="volume">
+        {Math.round(value * 100)}
+      </output>
     </>
   );
 };
+
+VolumeBar.propTypes = {
+  value: PropTypes.number.isRequired,
+  onVolumeChange: PropTypes.func.isRequired,
+};
+
 //------------------------------------------------
 const ToggleButton = () => {
   const toggle = () => {
     toggleOn = !toggleOn;
+    const checkBall = document.querySelector('#checkBall');
+    const checkText = document.querySelector('#checkText');
+    const volumeBar = document.querySelector('#volumebar');
+    const drumPads = document.querySelectorAll('.drum-pad');
+
     if (!toggleOn) {
-      document.querySelector('#checkBall').style.gridArea = 'c';
-      document.querySelector('#checkText').style.gridArea = 'a';
-      document.querySelector('#checkBall').style.marginLeft = '20px';
-      document.querySelector('#checkText').style.marginLeft = '20px';
-      document.querySelector('#checkText').textContent = 'OFF';
-      document.querySelector('#checkText').style.color = 'rgb(180, 180, 180)';
-      document.querySelector('#volumebar').classList.add('disableClass');
-      document.querySelectorAll('.drum-pad').forEach((el) => el.classList.add('disableClass'));
+      checkBall.style.gridArea = 'c';
+      checkText.style.gridArea = 'a';
+      checkBall.style.marginLeft = '20px';
+      checkText.style.marginLeft = '20px';
+      checkText.textContent = 'OFF';
+      checkText.style.color = 'rgb(180, 180, 180)';
+      volumeBar.classList.add('disableClass');
+      drumPads.forEach((el) => el.classList.add('disableClass'));
     } else {
-      document.querySelector('#checkBall').style.gridArea = 'a';
-      document.querySelector('#checkText').style.gridArea = 'c';
-      document.querySelector('#checkBall').style.marginLeft = '5px';
-      document.querySelector('#checkText').style.marginLeft = '5px';
-      document.querySelector('#checkText').textContent = 'ON';
-      document.querySelector('#checkText').style.color = 'rgb(200, 250, 250)';
-      document.querySelector('#volumebar').classList.remove('disableClass');
-      document.querySelectorAll('.drum-pad').forEach((el) => el.classList.remove('disableClass'));
+      checkBall.style.gridArea = 'a';
+      checkText.style.gridArea = 'c';
+      checkBall.style.marginLeft = '5px';
+      checkText.style.marginLeft = '5px';
+      checkText.textContent = 'ON';
+      checkText.style.color = 'rgb(200, 250, 250)';
+      volumeBar.classList.remove('disableClass');
+      drumPads.forEach((el) => el.classList.remove('disableClass'));
     }
   };
 
   return (
-    <div className="powerBtn" onClick={toggle}>
-      <span id="checkBall"></span>
+    <div className="powerBtn" role="button" tabIndex={0} onClick={toggle} onKeyPress={toggle}>
+      <span id="checkBall" />
       <div id="checkText">ON</div>
     </div>
   );
 };
+
 //------------------------------------------------
 export default App;
