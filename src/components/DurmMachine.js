@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import '../App.css';
+import './App.css';
 
 const soundUrls = {
   Q: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3',
@@ -31,33 +31,36 @@ let toggleOn = true;
 //------------------------------------------------
 const App = () => {
   const [volume, setVolume] = useState(1);
+  const [displayText, setDisplayText] = useState(''); // State to manage display text
 
   return (
     <div id="drum-machine">
       <div id="rightWraper">
         <ToggleButton />
-        <div id="display" />
+        <div id="display">{displayText}</div> {/* Display the text */}
         <div id="volumeBarWrap">
           <VolumeBar value={volume} onVolumeChange={setVolume} />
         </div>
       </div>
       <div id="leftWraper">
-        <Pad volume={volume} />
+        <Pad volume={volume} setDisplayText={setDisplayText} /> {/* Pass setDisplayText to Pad */}
       </div>
     </div>
   );
 };
 
 //------------------------------------------------
-const Pad = ({ volume }) => {
+const Pad = ({ volume, setDisplayText }) => {
   const playSound = (audioUrl, audioId) => {
     const audioElement = document.getElementById(audioId);
     audioElement.pause();
     audioElement.currentTime = 0;
     audioElement.volume = volume;
     audioElement.play().catch((error) => {
-      error('Playback error:', error);
+      console.error('Playback error:', error);
     });
+
+    setDisplayText(BtnNames[audioId]); // Set the display text
   };
 
   const handleKeyPress = (event) => {
@@ -99,6 +102,7 @@ const Pad = ({ volume }) => {
 
 Pad.propTypes = {
   volume: PropTypes.number.isRequired,
+  setDisplayText: PropTypes.func.isRequired, // Define prop type for setDisplayText
 };
 
 //------------------------------------------------
@@ -108,7 +112,7 @@ const VolumeBar = ({ value, onVolumeChange }) => {
       onVolumeChange(e.target.value);
       document.getElementById('volumeoutput').value = Math.round(e.target.value * 100);
     },
-    [onVolumeChange],
+    [onVolumeChange]
   );
 
   return (
@@ -158,7 +162,7 @@ const ToggleButton = () => {
 
   return (
     <div className="powerBtn" role="button" tabIndex={0} onClick={toggle} onKeyPress={toggle}>
-      <span id="checkBall" />
+      <span id="checkBall"></span>
       <div id="checkText">ON</div>
     </div>
   );
