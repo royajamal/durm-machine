@@ -56,7 +56,7 @@ const Pad = ({ volume }) => {
     audioElement.currentTime = 0;
     audioElement.volume = volume;
     audioElement.play().catch((error) => {
-     error('Playback error:', error);
+      error('Playback error:', error);
     });
   };
 
@@ -158,7 +158,7 @@ const ToggleButton = () => {
 
   return (
     <div className="powerBtn" role="button" tabIndex={0} onClick={toggle} onKeyPress={toggle}>
-      <span id="checkBall"/>
+      <span id="checkBall" />
       <div id="checkText">ON</div>
     </div>
   );
