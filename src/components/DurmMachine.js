@@ -37,7 +37,7 @@ const App = () => {
     <div id="drum-machine">
       <div id="rightWraper">
         <ToggleButton />
-        <div id="display">{displayText}</div> 
+<div id="display">{displayText}</div> 
         {/* Display the text */}
         <div id="volumeBarWrap">
           <VolumeBar value={volume} onVolumeChange={setVolume} />
