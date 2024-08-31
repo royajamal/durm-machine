@@ -38,7 +38,7 @@ const App = () => {
       <div id="rightWraper">
         <ToggleButton />
         <div id="display">{displayText}</div> 
-{/* Display the text */}
+        {/* Display the text */}
         <div id="volumeBarWrap">
           <VolumeBar value={volume} onVolumeChange={setVolume} />
         </div>
