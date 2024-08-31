@@ -38,7 +38,7 @@ const App = () => {
       <div id="rightWraper">
         <ToggleButton />
         <div id="display">{displayText}</div> 
-        {/* Display the text */}
+{/* Display the text */}
         <div id="volumeBarWrap">
           <VolumeBar value={volume} onVolumeChange={setVolume} />
         </div>
@@ -59,7 +59,7 @@ const Pad = ({ volume, setDisplayText }) => {
     audioElement.currentTime = 0;
     audioElement.volume = volume;
     audioElement.play().catch((error) => {
-    error('Playback error:', error);
+      error('Playback error:', error);
     });
 
     setDisplayText(BtnNames[audioId]); // Set the display text

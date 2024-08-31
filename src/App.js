@@ -37,13 +37,15 @@ const App = () => {
     <div id="drum-machine">
       <div id="rightWraper">
         <ToggleButton />
-        <div id="display">{displayText}</div> {/* Display the text */}
+        <div id="display">{displayText}</div> 
+{/* Display the text */}
         <div id="volumeBarWrap">
           <VolumeBar value={volume} onVolumeChange={setVolume} />
         </div>
       </div>
       <div id="leftWraper">
-        <Pad volume={volume} setDisplayText={setDisplayText} /> {/* Pass setDisplayText to Pad */}
+        <Pad volume={volume} setDisplayText={setDisplayText} />
+        {/* Pass setDisplayText to Pad */}
       </div>
     </div>
   );
@@ -57,7 +59,7 @@ const Pad = ({ volume, setDisplayText }) => {
     audioElement.currentTime = 0;
     audioElement.volume = volume;
     audioElement.play().catch((error) => {
-      console.error('Playback error:', error);
+      error('Playback error:', error);
     });
 
     setDisplayText(BtnNames[audioId]); // Set the display text
@@ -112,7 +114,7 @@ const VolumeBar = ({ value, onVolumeChange }) => {
       onVolumeChange(e.target.value);
       document.getElementById('volumeoutput').value = Math.round(e.target.value * 100);
     },
-    [onVolumeChange]
+    [onVolumeChange],
   );
 
   return (
@@ -162,7 +164,7 @@ const ToggleButton = () => {
 
   return (
     <div className="powerBtn" role="button" tabIndex={0} onClick={toggle} onKeyPress={toggle}>
-      <span id="checkBall"></span>
+      <span id="checkBall" />
       <div id="checkText">ON</div>
     </div>
   );
