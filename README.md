@@ -1,4 +1,4 @@
-## Markdown Previewer 📝✨ 
+## Durm Machine 📝✨ 
 
 ## Project Description 🧠
 This pull request introduces a fully responsive Drum Machine web application built using React. The app allows users to interact with different drum pads to play corresponding sounds, creating their own beats. The design is optimized for mobile and tablet devices, ensuring smooth performance and user experience across various screen sizes, including screens as small as 430 px.
